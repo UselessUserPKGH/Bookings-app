@@ -36,8 +36,11 @@ class MainActivity : ComponentActivity() {
 
 fun callPhone(context: Context, phoneNumber: String) {
     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+//   if (intent.resolveActivity(context.packageManager) != null) {
     context.startActivity(intent)
-//    Toast.makeText(context, "Нет приложения для звонков", Toast.LENGTH_SHORT).show()
+//    } else {
+//        Toast.makeText(context, "Нет приложения для звонков", Toast.LENGTH_SHORT).show()
+//    }
 }
 
 fun sendEmail(context: Context, email: String, subject: String) {
