@@ -89,13 +89,12 @@ fun shareContact(context: Context, text: String) {
 fun ContactScreen() {
     val context = LocalContext.current
 
-    // Данные контакта
-    val phoneNumber = "+7 (495) 123-45-67"
-    val email = "contact@example.com"
-    val emailSubject = "Обращение"
+    val phoneNumber = context.getString(R.string.phone_number)
+    val email = context.getString(R.string.email)
+    val emailSubject = context.getString(R.string.email_subject)
     val latitude = 60.0237
     val longitude = 30.2289
-    val officeLabel = "Наш офис"
+    val officeLabel = context.getString(R.string.office_label)
     val shareText = "Контакт: $phoneNumber, $email"
 
     Column(

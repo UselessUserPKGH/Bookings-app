@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Bookings-app</string>
+    <string name="phone_number">+7 (495) 123-45-67</string>
+    <string name="email">contact@example.com</string>
+    <string name="email_subject">Обращение</string>
+    <string name="office_label">Наш офис</string>
 </resources>
