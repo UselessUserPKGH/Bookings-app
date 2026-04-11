@@ -47,10 +47,11 @@ fun callPhone(context: Context, phoneNumber: String) {
 
 fun sendEmail(context: Context, email: String, subject: String) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:")
-        putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        data = Uri.parse("mailto:$email")  // ← адрес прямо в URI
         putExtra(Intent.EXTRA_SUBJECT, subject)
+        // EXTRA_EMAIL уже не нужен, т.к. email в URI
     }
+
     if (intent.resolveActivity(context.packageManager) != null) {
         context.startActivity(intent)
     } else {
@@ -118,7 +119,7 @@ fun ContactScreen() {
             onClick = { callPhone(context, phoneNumber) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("📞 Позвонить", fontSize = 18.sp)
+            Text("Позвонить", fontSize = 18.sp)
         }
 
         // Кнопка 2: Написать email
@@ -126,7 +127,7 @@ fun ContactScreen() {
             onClick = { sendEmail(context, email, emailSubject) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("✉️ Написать email", fontSize = 18.sp)
+            Text("Написать email", fontSize = 18.sp)
         }
 
         // Кнопка 3: Показать офис на карте
@@ -134,7 +135,7 @@ fun ContactScreen() {
             onClick = { showOnMap(context, latitude, longitude, officeLabel) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("🗺️ Показать офис на карте", fontSize = 18.sp)
+            Text("Показать офис на карте", fontSize = 18.sp)
         }
 
         // Кнопка 4: Поделиться контактом (с createChooser)
@@ -142,7 +143,7 @@ fun ContactScreen() {
             onClick = { shareContact(context, shareText) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("🔗 Поделиться контактом", fontSize = 18.sp)
+            Text("Поделиться контактом", fontSize = 18.sp)
         }
     }
 }
