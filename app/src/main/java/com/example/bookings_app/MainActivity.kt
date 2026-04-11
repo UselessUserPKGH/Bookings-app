@@ -34,8 +34,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// --- Вспомогательные функции (безопасный запуск Intent) ---
-
 fun callPhone(context: Context, phoneNumber: String) {
     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
     if (intent.resolveActivity(context.packageManager) != null) {
@@ -47,9 +45,8 @@ fun callPhone(context: Context, phoneNumber: String) {
 
 fun sendEmail(context: Context, email: String, subject: String) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:$email")  // ← адрес прямо в URI
+        data = Uri.parse("mailto:$email")
         putExtra(Intent.EXTRA_SUBJECT, subject)
-        // EXTRA_EMAIL уже не нужен, т.к. email в URI
     }
 
     if (intent.resolveActivity(context.packageManager) != null) {
@@ -74,7 +71,6 @@ fun shareContact(context: Context, text: String) {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, text)
     }
-    // createChooser – всегда показывает диалог выбора
     val chooser = Intent.createChooser(intent, "Поделиться контактом через...")
     if (intent.resolveActivity(context.packageManager) != null) {
         context.startActivity(chooser)
@@ -82,8 +78,6 @@ fun shareContact(context: Context, text: String) {
         Toast.makeText(context, "Нет приложения для отправки", Toast.LENGTH_SHORT).show()
     }
 }
-
-// --- UI на Jetpack Compose ---
 
 @Composable
 fun ContactScreen() {
@@ -104,7 +98,6 @@ fun ContactScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
     ) {
-        // Заголовок
         Text(
             text = "Контактная книга",
             fontSize = 28.sp,
@@ -113,7 +106,6 @@ fun ContactScreen() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Кнопка 1: Позвонить
         Button(
             onClick = { callPhone(context, phoneNumber) },
             modifier = Modifier.fillMaxWidth()
@@ -121,7 +113,6 @@ fun ContactScreen() {
             Text("Позвонить", fontSize = 18.sp)
         }
 
-        // Кнопка 2: Написать email
         Button(
             onClick = { sendEmail(context, email, emailSubject) },
             modifier = Modifier.fillMaxWidth()
@@ -129,7 +120,6 @@ fun ContactScreen() {
             Text("Написать email", fontSize = 18.sp)
         }
 
-        // Кнопка 3: Показать офис на карте
         Button(
             onClick = { showOnMap(context, latitude, longitude, officeLabel) },
             modifier = Modifier.fillMaxWidth()
@@ -137,7 +127,6 @@ fun ContactScreen() {
             Text("Показать офис на карте", fontSize = 18.sp)
         }
 
-        // Кнопка 4: Поделиться контактом (с createChooser)
         Button(
             onClick = { shareContact(context, shareText) },
             modifier = Modifier.fillMaxWidth()
