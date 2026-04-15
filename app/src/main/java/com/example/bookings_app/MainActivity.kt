@@ -72,6 +72,7 @@ fun shareContact(context: Context, text: String) {
     }
     val chooserTitle = context.getString(R.string.chooserTitle)
     val chooser = Intent.createChooser(intent, chooserTitle)
+    chooser.putExtra(Intent.EXTRA_TITLE, chooserTitle)
     if (intent.resolveActivity(context.packageManager) != null) {
         context.startActivity(chooser)
     } else {
@@ -102,7 +103,6 @@ fun ContactScreen() {
         Text(
             text = context.getString(R.string.contactBook),
             fontSize = 28.sp,
-            style = MaterialTheme.typography.titleLarge
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -137,11 +137,7 @@ fun ContactScreen() {
     }
 }
 
-@Preview(
-    name = "Light Mode",
-    showBackground = true,
-    showSystemUi = true
-)
+@Preview(showBackground = true)
 @Composable
 fun ContactScreenPreview() {
     BookingsappTheme {

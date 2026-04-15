@@ -23,8 +23,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/contactBook"
-        android:supportsRtl="true"
-        tools:targetApi="31">
+        android:supportsRtl="true">
 
         <activity
             android:name=".MainActivity"
