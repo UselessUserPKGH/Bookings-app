@@ -2,7 +2,6 @@ package com.example.bookings_app
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -16,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.example.bookings_app.ui.theme.BookingsappTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,33 +35,33 @@ class MainActivity : ComponentActivity() {
 }
 
 fun callPhone(context: Context, phoneNumber: String) {
-    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
-   if (intent.resolveActivity(context.packageManager) != null) {
-    context.startActivity(intent)
+    val intent = Intent(Intent.ACTION_DIAL, "tel:$phoneNumber".toUri())
+    if (intent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(intent)
     } else {
-        Toast.makeText(context, "Нет приложения для звонков", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.msgPhone), Toast.LENGTH_SHORT).show()
     }
 }
 
 fun sendEmail(context: Context, email: String, subject: String) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse("mailto:$email")
+        data = "mailto:$email".toUri()
         putExtra(Intent.EXTRA_SUBJECT, subject)
     }
     if (intent.resolveActivity(context.packageManager) != null) {
         context.startActivity(intent)
     } else {
-        Toast.makeText(context, "Нет почтового приложения", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.msgMail), Toast.LENGTH_SHORT).show()
     }
 }
 
 fun showOnMap(context: Context, latitude: Double, longitude: Double, label: String) {
-    val geoUri = Uri.parse("geo:0,0?q=$latitude,$longitude($label)")
+    val geoUri = "geo:$latitude,$longitude($label)".toUri()
     val intent = Intent(Intent.ACTION_VIEW, geoUri)
     if (intent.resolveActivity(context.packageManager) != null) {
         context.startActivity(intent)
     } else {
-        Toast.makeText(context, "Нет приложения для карт", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.msgMap), Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -70,11 +70,12 @@ fun shareContact(context: Context, text: String) {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, text)
     }
-    val chooser = Intent.createChooser(intent, "Поделиться контактом через...")
+    val chooserTitle = context.getString(R.string.chooserTitle)
+    val chooser = Intent.createChooser(intent, chooserTitle)
     if (intent.resolveActivity(context.packageManager) != null) {
         context.startActivity(chooser)
     } else {
-        Toast.makeText(context, "Нет приложения для отправки", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.msgContact), Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -88,7 +89,8 @@ fun ContactScreen() {
     val latitude = 60.0237
     val longitude = 30.2289
     val officeLabel = context.getString(R.string.office_label)
-    val shareText = "Контакт: $phoneNumber, $email"
+    val myKey = context.getString(R.string.shareTextKey)
+    val shareText = "$myKey $phoneNumber, $email"
 
     Column(
         modifier = Modifier
@@ -98,7 +100,7 @@ fun ContactScreen() {
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
     ) {
         Text(
-            text = "Контактная книга",
+            text = context.getString(R.string.contactBook),
             fontSize = 28.sp,
             style = MaterialTheme.typography.titleLarge
         )
@@ -109,28 +111,28 @@ fun ContactScreen() {
             onClick = { callPhone(context, phoneNumber) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Позвонить", fontSize = 18.sp)
+            Text( text = context.getString(R.string.callMsg), fontSize = 18.sp)
         }
 
         Button(
             onClick = { sendEmail(context, email, emailSubject) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Написать email", fontSize = 18.sp)
+            Text(text = context.getString(R.string.emailMsg), fontSize = 18.sp)
         }
 
         Button(
             onClick = { showOnMap(context, latitude, longitude, officeLabel) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Показать офис на карте", fontSize = 18.sp)
+            Text(context.getString(R.string.mapMsg), fontSize = 18.sp)
         }
 
         Button(
             onClick = { shareContact(context, shareText) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Поделиться контактом", fontSize = 18.sp)
+            Text(context.getString(R.string.contactMsg), fontSize = 18.sp)
         }
     }
 }

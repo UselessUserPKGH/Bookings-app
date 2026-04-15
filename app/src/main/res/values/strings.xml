@@ -4,4 +4,15 @@
     <string name="email">contact@example.com</string>
     <string name="email_subject">Обращение</string>
     <string name="office_label">Наш офис</string>
+    <string name="msgPhone">Нет приложения для звонков</string>
+    <string name="msgMail">Нет почтового приложения</string>
+    <string name="msgMap">Нет приложения для карт</string>
+    <string name="msgContact">Нет приложения для отправки</string>
+    <string name="chooserTitle">Поделиться контактом через...</string>
+    <string name="shareTextKey">Контакт: </string>
+    <string name="contactBook">Контактная книга</string>
+    <string name="callMsg">Позвонить</string>
+    <string name="emailMsg">Написать email</string>
+    <string name="mapMsg">Показать офис на карте</string>
+    <string name="contactMsg">Поделиться контактом</string>
 </resources>
