@@ -36,11 +36,11 @@ class MainActivity : ComponentActivity() {
 
 fun callPhone(context: Context, phoneNumber: String) {
     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
-//   if (intent.resolveActivity(context.packageManager) != null) {
+   if (intent.resolveActivity(context.packageManager) != null) {
     context.startActivity(intent)
-//    } else {
-//        Toast.makeText(context, "Нет приложения для звонков", Toast.LENGTH_SHORT).show()
-//    }
+    } else {
+        Toast.makeText(context, "Нет приложения для звонков", Toast.LENGTH_SHORT).show()
+    }
 }
 
 fun sendEmail(context: Context, email: String, subject: String) {
@@ -48,16 +48,21 @@ fun sendEmail(context: Context, email: String, subject: String) {
         data = Uri.parse("mailto:$email")
         putExtra(Intent.EXTRA_SUBJECT, subject)
     }
-    context.startActivity(intent)
-//    Toast.makeText(context, "Нет почтового приложения", Toast.LENGTH_SHORT).show()
-
+    if (intent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(intent)
+    } else {
+        Toast.makeText(context, "Нет почтового приложения", Toast.LENGTH_SHORT).show()
+    }
 }
 
 fun showOnMap(context: Context, latitude: Double, longitude: Double, label: String) {
     val geoUri = Uri.parse("geo:0,0?q=$latitude,$longitude($label)")
     val intent = Intent(Intent.ACTION_VIEW, geoUri)
-    context.startActivity(intent)
-//    Toast.makeText(context, "Нет приложения для карт", Toast.LENGTH_SHORT).show()
+    if (intent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(intent)
+    } else {
+        Toast.makeText(context, "Нет приложения для карт", Toast.LENGTH_SHORT).show()
+    }
 }
 
 fun shareContact(context: Context, text: String) {
@@ -66,8 +71,11 @@ fun shareContact(context: Context, text: String) {
         putExtra(Intent.EXTRA_TEXT, text)
     }
     val chooser = Intent.createChooser(intent, "Поделиться контактом через...")
-    context.startActivity(chooser)
-//    Toast.makeText(context, "Нет приложения для отправки", Toast.LENGTH_SHORT).show()
+    if (intent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(chooser)
+    } else {
+        Toast.makeText(context, "Нет приложения для отправки", Toast.LENGTH_SHORT).show()
+    }
 }
 
 @Composable
