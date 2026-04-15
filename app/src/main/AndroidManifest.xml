@@ -22,7 +22,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Контактная книга"
+        android:label="@string/contactBook"
         android:supportsRtl="true"
         tools:targetApi="31">
 
